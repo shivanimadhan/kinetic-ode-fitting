@@ -294,12 +294,13 @@ class CopolymerizationModel():
 
         # Interpolate method of moments solution
         num_points = 40
-        self.t = np.linspace(np.min(self.mom_sol.t), np.max(self.mom_sol.t), num_points)
+        #self.t = np.linspace(np.min(self.mom_sol.t), np.max(self.mom_sol.t), num_points)t_span = [0, 60*3600]
+        self.t = np.linspace(self.t_span[0], self.t_span[1], num_points)
         self.t_hours = self.t / 3600
         self.sol = np.zeros([len(self.mom_sol.y), num_points])
 
         for i in range(len(self.sol)):
-            interp_func = interp1d(self.mom_sol.t, self.mom_sol.y[i], kind='cubic')
+            interp_func = interp1d(self.mom_sol.t, self.mom_sol.y[i], bounds_error=False, kind='cubic')
             self.sol[i,:] = interp_func(self.t)
 
         # Define monomer concentrations
