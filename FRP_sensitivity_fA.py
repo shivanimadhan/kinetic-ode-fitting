@@ -41,11 +41,14 @@ def log_sample(problem, num_samples=1000) -> np.ndarray:
 
     return param_values
 
-def solve_odes(param_values, time_points=20, y0=[10, 0, 0], tmax=10) -> np.ndarray:
+def solve_odes(param_values, time_points=20, tmax=10) -> np.ndarray:
     
     t = np.linspace(0, tmax, time_points)
+    
+    num_input_params = 5
+    num_samples = param_values.shape[0]
 
-    output_matrix = np.empty([param_values.shape[0], time_points, 5])
+    output_matrix = np.empty([num_samples, time_points, num_input_params])
     
     for i, params in tqdm(enumerate(param_values)):
         
@@ -56,6 +59,19 @@ def solve_odes(param_values, time_points=20, y0=[10, 0, 0], tmax=10) -> np.ndarr
             0, 0, 0, # Termination (combination) rate constants
             0, 0, 0  # Termination (disproportionation) rate constants
         ]
+        
+        fA = params[5]
+        M0 = 3.0
+        
+        # Define initial concentrations
+        I0 = 0.005
+        A0 = fA * M0
+        B0 = (1 - fA) * M0
+
+        y0 = np.zeros(33)
+        y0[0] = I0
+        y0[2] = A0
+        y0[3] = B0
     
         # Initialize and solve the model
         cm = CopolymerizationModel(k, y0)
@@ -259,9 +275,12 @@ def plot_sensitivity_grid(problem, dfs):
     
     num_outputs = len(dfs)
     num_vars = problem['num_vars']
+    
+    print(num_outputs)
+    print(num_vars)
 
     sz = 6
-    fig, axs = plt.subplots(num_vars, num_outputs, figsize=(num_outputs*sz, num_vars*sz), dpi=300)
+    fig, axs = plt.subplots(num_outputs, num_vars, figsize=(num_vars*sz, num_outputs*sz), dpi=300)
 
     dtype = 'ST'
     data_labels = [name+'_'+dtype for name in problem['names']]
