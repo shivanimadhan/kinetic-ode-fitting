@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sbml xmlns="http://www.sbml.org/sbml/level2/version4" level="2" version="4">
+  <model id="ode_model" name="ODE Model">
+
+    <!-- List of Unit Definitions -->
+    <listOfUnitDefinitions>
+      <unitDefinition id="volume" name="volume">
+        <listOfUnits>
+          <unit kind="litre" exponent="1" scale="-3" multiplier="1"/>
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="substance" name="substance">
+        <listOfUnits>
+          <unit kind="mole" exponent="1" scale="-3" multiplier="1"/>
+        </listOfUnits>
+      </unitDefinition>
+    </listOfUnitDefinitions>
+
+    <!-- List of Compartments -->
+    <listOfCompartments>
+      <compartment id="compartment" name="compartment" spatialDimensions="3" size="1" constant="true"/>
+    </listOfCompartments>
+
+    <!-- List of Species -->
+    <listOfSpecies>
+      <species id="I" name="I" compartment="compartment" initialConcentration="0" boundaryCondition="false" constant="false"/>
+      <species id="R" name="R" compartment="compartment" initialConcentration="0" boundaryCondition="false" constant="false"/>
+      <species id="A" name="A" compartment="compartment" initialConcentration="0" boundaryCondition="false" constant="false"/>
+      <species id="B" name="B" compartment="compartment" initialConcentration="0" boundaryCondition="false" constant="false"/>
+      <species id="RA" name="RA" compartment="compartment" initialConcentration="0" boundaryCondition="false" constant="false"/>
+      <species id="RB" name="RB" compartment="compartment" initialConcentration="0" boundaryCondition="false" constant="false"/>
+      <species id="PAA" name="PAA" compartment="compartment" initialConcentration="0" boundaryCondition="false" constant="false"/>
+      <species id="PAB" name="PAB" compartment="compartment" initialConcentration="0" boundaryCondition="false" constant="false"/>
+      <species id="PBA" name="PBA" compartment="compartment" initialConcentration="0" boundaryCondition="false" constant="false"/>
+      <species id="PBB" name="PBB" compartment="compartment" initialConcentration="0" boundaryCondition="false" constant="false"/>
+      <species id="PD" name="PD" compartment="compartment" initialConcentration="0" boundaryCondition="false" constant="false"/> 
+      <species id="PA" name="PA" compartment="compartment" initialConcentration="0" boundaryCondition="false" constant="false"/>
+      <species id="PB" name="PB" compartment="compartment" initialConcentration="0" boundaryCondition="false" constant="false"/>
+    </listOfSpecies>
+
+    <!-- List of Parameters -->
+    <listOfParameters>
+      <parameter id="kd" name="kd" value="0" constant="true"/>
+      <parameter id="f" name="f" value="0" constant="true"/>
+      <parameter id="kpRA" name="kpRA" value="0" constant="true"/>
+      <parameter id="kpRB" name="kpRB" value="0" constant="true"/>
+      <parameter id="kpAA" name="kpAA" value="0" constant="true"/>
+      <parameter id="kpBA" name="kpBA" value="0" constant="true"/>
+      <parameter id="kpAB" name="kpAB" value="0" constant="true"/>
+      <parameter id="kpBB" name="kpBB" value="0" constant="true"/>
+      <parameter id="kdAA" name="kdAA" value="0" constant="true"/>
+      <parameter id="kdBA" name="kdBA" value="0" constant="true"/>
+      <parameter id="kdAB" name="kdAB" value="0" constant="true"/>
+      <parameter id="kdBB" name="kdBB" value="0" constant="true"/>
+      <parameter id="ktAA" name="ktAA" value="0" constant="true"/>
+      <parameter id="ktAB" name="ktAB" value="0" constant="true"/>
+      <parameter id="ktBB" name="ktBB" value="0" constant="true"/>
+      <parameter id="ktcAA" name="ktcAA" value="0" constant="true"/>
+      <parameter id="ktcAB" name="ktcAB" value="0" constant="true"/>
+      <parameter id="ktcBB" name="ktcBB" value="0" constant="true"/>
+      <parameter id="ktdAA" name="ktdAA" value="0" constant="true"/>
+      <parameter id="ktdAB" name="ktdAB" value="0" constant="true"/>
+      <parameter id="ktdBB" name="ktdBB" value="0" constant="true"/>
+      <parameter id='fPAA' name='fPAA' value='0' constant='false'/>
+      <parameter id='fPBA' name='fPBA' value='0' constant='false'/>
+      <parameter id='fPAB' name='fPAB' value='0' constant='false'/>
+      <parameter id='fPBB' name='fPBB' value='0' constant='false'/>
+    </listOfParameters>
+
+    <listOfRules>
+      <assignmentRule variable="PA">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <plus/>
+            <ci>PAA</ci>
+            <ci>PBA</ci>
+            <cn>1e-40</cn>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="PB">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <plus/>
+            <ci>PAB</ci>
+            <ci>PBB</ci>
+            <cn>1e-40</cn>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="fPAA">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci>PAA</ci>
+            <ci>PA</ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="fPBA">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci>PBA</ci>
+            <ci>PA</ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="fPAB">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci>PAB</ci>
+            <ci>PB</ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="fPBB">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci>PBB</ci>
+            <ci>PB</ci>
+          </apply>
+        </math>
+      </assignmentRule>
+    </listOfRules>
+
+    <!-- List of Reactions -->
+    <listOfReactions>
+      <reaction id="PAA_p_PAA" name="PAA_p_PAA" reversible="false">
+        <listOfReactants>
+          <speciesReference species="PAA" stoichiometry="1"/>
+          <speciesReference species="A" stoichiometry="1"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="PAA" stoichiometry="1"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci>compartment</ci>
+              <ci>kPAA</ci>
+              <ci>PAA</ci>
+              <ci>A</ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="PAA_dp_PAA" name="PAA_dp_PAA" reversible="false">
+        <listOfReactants>
+          <speciesReference species="PAA" stoichiometry="1"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="PAA" stoichiometry="1"/>
+          <speciesReference species="A" stoichiometry="1"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci>compartment</ci>
+              <ci>fPAA</ci>
+              <ci>kdAA</ci>
+              <ci>PAA</ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+    </listOfReactions>
+  </model>
+</sbml>
