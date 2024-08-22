@@ -4,6 +4,7 @@ import petab
 from petab.v1.C import PARAMETER_ID, PARAMETER_SCALE, LOWER_BOUND, UPPER_BOUND, NOMINAL_VALUE, ESTIMATE, OBSERVABLE_ID, SIMULATION_CONDITION_ID, TIME, MEASUREMENT, OBSERVABLE_FORMULA, NOISE_FORMULA, LOG, CONDITION_ID, CONDITION_NAME, FORMAT_VERSION, PARAMETER_FILE, PROBLEMS, SBML_FILES, CONDITION_FILES, MEASUREMENT_FILES, OBSERVABLE_FILES
 import amici
 from libsbml import Model
+import pypesto
 
 import PyPESTO.FRP.sbml as sbml
 import os
@@ -238,3 +239,25 @@ def write_petab_files(amici_model, sbml_model_filepath):
     print(lint_problem(problem))
     
     return yaml_filepath
+
+def save_pypesto_results(result, filename):
+    
+    assert(filename.endswith('.hdf5'))
+    
+    if os.path.exists(f'/SBML/PyPESTO/FRP/Results') == False:
+        os.makedirs(f'/SBML/PyPESTO/FRP/Results')
+    if os.path.exists(f'/SBML/PyPESTO/FRP/Results/{MODEL_NAME}') == False:
+        os.makedirs(f'/SBML/PyPESTO/FRP/Results/{MODEL_NAME}')
+    
+    result_file = f'/SBML/PyPESTO/FRP/Results/{MODEL_NAME}/{filename}'
+    
+    pypesto.store.write_result(
+        result=result,
+        filename=result_file,
+        problem=True,
+        optimize=True,
+        profile=True,
+        sample=True,
+    )
+    
+    print(f'Saved optimization result to {result_file}')
