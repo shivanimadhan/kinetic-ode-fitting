@@ -36,129 +36,19 @@ def outputSBML(document: SBMLDocument, model_filename: str = 'sbml_model.xml'):
     with open(model_filename, 'w') as f:
         f.write(model_xml_string)
  
-# def create_model():
-#   """Returns a simple but complete SBML Level 3 model for illustration."""
- 
-#   # Create an empty SBMLDocument object.  It's a good idea to check for
-#   # possible errors.  Even when the parameter values are hardwired like
-#   # this, it is still possible for a failure to occur (e.g., if the
-#   # operating system runs out of memory).
-
-#   try:
-#     document = SBMLDocument(3, 1)
-#   except ValueError:
-#     raise SystemExit('Could not create SBMLDocumention object')
-
-#   # Create the basic Model object inside the SBMLDocument object.  To
-#   # produce a model with complete units for the reaction rates, we need
-#   # to set the 'timeUnits' and 'extentUnits' attributes on Model.  We
-#   # set 'substanceUnits' too, for good measure, though it's not strictly
-#   # necessary here because we also set the units for invididual species
-#   # in their definitions.
-
-#   model = document.createModel()
-#   check(model,                              'create model')
-#   check(model.setTimeUnits("second"),       'set model-wide time units')
-#   check(model.setExtentUnits("mole"),       'set model units of extent')
-#   check(model.setSubstanceUnits('mole'),    'set model substance units')
-
-#   # Create a unit definition we will need later.  Note that SBML Unit
-#   # objects must have all four attributes 'kind', 'exponent', 'scale'
-#   # and 'multiplier' defined.
-
-#   per_second = model.createUnitDefinition()
-#   check(per_second,                         'create unit definition')
-#   check(per_second.setId('per_second'),     'set unit definition id')
-#   unit = per_second.createUnit()
-#   check(unit,                               'create unit on per_second')
-#   check(unit.setKind(UNIT_KIND_SECOND),     'set unit kind')
-#   check(unit.setExponent(-1),               'set unit exponent')
-#   check(unit.setScale(0),                   'set unit scale')
-#   check(unit.setMultiplier(1),              'set unit multiplier')
-
-#   # Create a compartment inside this model, and set the required
-#   # attributes for an SBML compartment in SBML Level 3.
-
-#   c1 = model.createCompartment()
-#   check(c1,                                 'create compartment')
-#   check(c1.setId('c1'),                     'set compartment id')
-#   check(c1.setConstant(True),               'set compartment "constant"')
-#   check(c1.setSize(1),                      'set compartment "size"')
-#   check(c1.setSpatialDimensions(3),         'set compartment dimensions')
-#   check(c1.setUnits('litre'),               'set compartment size units')
-
-#   # Create two species inside this model, set the required attributes
-#   # for each species in SBML Level 3 (which are the 'id', 'compartment',
-#   # 'constant', 'hasOnlySubstanceUnits', and 'boundaryCondition'
-#   # attributes), and initialize the amount of the species along with the
-#   # units of the amount.
-
-#   s1 = model.createSpecies()
-#   check(s1,                                 'create species s1')
-#   check(s1.setId('s1'),                     'set species s1 id')
-#   check(s1.setCompartment('c1'),            'set species s1 compartment')
-#   check(s1.setConstant(False),              'set "constant" attribute on s1')
-#   check(s1.setInitialAmount(5),             'set initial amount for s1')
-#   check(s1.setSubstanceUnits('mole'),       'set substance units for s1')
-#   check(s1.setBoundaryCondition(False),     'set "boundaryCondition" on s1')
-#   check(s1.setHasOnlySubstanceUnits(False), 'set "hasOnlySubstanceUnits" on s1')
-
-#   s2 = model.createSpecies()
-#   check(s2,                                 'create species s2')
-#   check(s2.setId('s2'),                     'set species s2 id')
-#   check(s2.setCompartment('c1'),            'set species s2 compartment')
-#   check(s2.setConstant(False),              'set "constant" attribute on s2')
-#   check(s2.setInitialAmount(0),             'set initial amount for s2')
-#   check(s2.setSubstanceUnits('mole'),       'set substance units for s2')
-#   check(s2.setBoundaryCondition(False),     'set "boundaryCondition" on s2')
-#   check(s2.setHasOnlySubstanceUnits(False), 'set "hasOnlySubstanceUnits" on s2')
+def load_amici_model(model_filepath: str, model_output_dir: str) -> Model:
   
-#   print(s2)
+  # Load the model module
+  model_name = os.path.basename(model_filepath).split('.')[0]
+  model_module = amici.import_model_module(model_name, model_output_dir)
 
-#   # Create a parameter object inside this model, set the required
-#   # attributes 'id' and 'constant' for a parameter in SBML Level 3, and
-#   # initialize the parameter with a value along with its units.
+  # Instantiate model
+  model = model_module.getModel()
 
-#   k = model.createParameter()
-#   check(k,                                  'create parameter k')
-#   check(k.setId('k'),                       'set parameter k id')
-#   check(k.setConstant(True),                'set parameter k "constant"')
-#   check(k.setValue(1),                      'set parameter k value')
-#   check(k.setUnits('per_second'),           'set parameter k units')
-
-#   # Create a reaction inside this model, set the reactants and products,
-#   # and set the reaction rate expression (the SBML "kinetic law").  We
-#   # set the minimum required attributes for all of these objects.  The
-#   # units of the reaction rate are determined from the 'timeUnits' and
-#   # 'extentUnits' attributes on the Model object.
-
-#   r1 = model.createReaction()
-#   check(r1,                                 'create reaction')
-#   check(r1.setId('r1'),                     'set reaction id')
-#   check(r1.setReversible(False),            'set reaction reversibility flag')
-#   check(r1.setFast(False),                  'set reaction "fast" attribute')
-
-#   species_ref1 = r1.createReactant()
-#   check(species_ref1,                       'create reactant')
-#   check(species_ref1.setSpecies('s1'),      'assign reactant species')
-#   check(species_ref1.setConstant(True),     'set "constant" on species ref 1')
-
-#   species_ref2 = r1.createProduct()
-#   check(species_ref2,                       'create product')
-#   check(species_ref2.setSpecies('s2'),      'assign product species')
-#   check(species_ref2.setConstant(True),     'set "constant" on species ref 2')
-
-#   math_ast = parseL3Formula('k * s1 * c1')
-#   check(math_ast,                           'create AST for rate expression')
- 
-#   kinetic_law = r1.createKineticLaw()
-#   check(kinetic_law,                        'create kinetic law')
-#   check(kinetic_law.setMath(math_ast),      'set math on kinetic law')
- 
-#   # And we're done creating the basic model.
-#   # Now return a text string containing the model in XML format.
- 
-#   return writeSBMLToString(document)
+  # Instantiate solver
+  solver = model.getSolver()
+        
+  return model
 
 def visualize_model(model_filename: str, output_filename: str = 'sbml_model.jpg') -> None:
   
@@ -265,6 +155,17 @@ def create_reaction(model: Model, id: str, reactantsDict: Dict, productsDict: Di
 
   return r
 
+def create_rule(model: Model, var, formula: str = '') -> AssignmentRule:
+  
+  rule: AssignmentRule = model.createAssignmentRule()
+  check(rule.setVariable(var.getId()), 'set variable')
+  
+  # math_ast: ASTNode = parseL3Formula(f'{species1.getId()} + {species2.getId()} + 1e-10')
+  math_ast: ASTNode = parseL3Formula(formula)
+  check(math_ast,               'create AST for rate expression')
+  check(rule.setMath(math_ast), 'set math on kinetic law')
+  return rule
+
 def create_SBML_FRP2_v1(model_filepath: str, with_rules: bool = False) -> Model:
   
   print('Creating SBML model (FRP2 v1)')
@@ -317,30 +218,12 @@ def create_SBML_FRP2_v1(model_filepath: str, with_rules: bool = False) -> Model:
       ('prop_PBA_B', {PBA.getId(): 1, B.getId(): 1}, {PAB.getId(): 1}, f'{kpAB.getId()} * {PBA.getId()} * {B.getId()}'),
       ('prop_PBB_A', {PBB.getId(): 1, A.getId(): 1}, {PBA.getId(): 1}, f'{kpBA.getId()} * {PBB.getId()} * {A.getId()}'),
       ('prop_PBB_B', {PBB.getId(): 1, B.getId(): 1}, {PBB.getId(): 1}, f'{kpBB.getId()} * {PBB.getId()} * {B.getId()}'),
-      # ('deprop_PAAA', {PAA.getId(): 1}, {PAA.getId(): 1, A.getId(): 1}, f'{kdAA.getId()} * {fPAA.getId()} * {PAA.getId()}'),
-      # ('deprop_PBAA', {PAA.getId(): 1}, {PBA.getId(): 1, A.getId(): 1}, f'{kdAA.getId()} * {fPBA.getId()} * {PAA.getId()}'),
-      # ('deprop_PABA', {PBA.getId(): 1}, {PAB.getId(): 1, A.getId(): 1}, f'{kdBA.getId()} * {fPAB.getId()} * {PBA.getId()}'),
-      # ('deprop_PBBA', {PBA.getId(): 1}, {PBB.getId(): 1, A.getId(): 1}, f'{kdBA.getId()} * {fPBB.getId()} * {PBA.getId()}'),
-      # ('deprop_PAAB', {PAB.getId(): 1}, {PAA.getId(): 1, B.getId(): 1}, f'{kdAB.getId()} * {fPAA.getId()} * {PAB.getId()}'),
-      # ('deprop_PBAB', {PAB.getId(): 1}, {PBA.getId(): 1, B.getId(): 1}, f'{kdAB.getId()} * {fPBA.getId()} * {PAB.getId()}'),
-      # ('deprop_PABB', {PBB.getId(): 1}, {PAB.getId(): 1, B.getId(): 1}, f'{kdBB.getId()} * {fPAB.getId()} * {PBB.getId()}'),
-      # ('deprop_PBBB', {PBB.getId(): 1}, {PBB.getId(): 1, B.getId(): 1}, f'{kdBB.getId()} * {fPBB.getId()} * {PBB.getId()}'),
   ]
-  # assert()
-  
-  
+
   # Define assignment rules
   create_rule(model, kpAB, formula=f'{kpAA.getId()} / {rA.getId()}') # rA = kpAA / kpAB -> kpAB = kpAA / rA
   create_rule(model, kpBB, formula=f'{kpAA.getId()} / {rX.getId()}') # rX = kpAA / kpBB -> kpBB = kpAA / rX
   create_rule(model, kpBA, formula=f'{kpBB.getId()} / {rB.getId()}') # rB = kpBB / kpBA -> kpBA = kpBB / rB
-  
-  
-  # create_rule(model, kpBB, formula=f'{rX.getId()} * {kpBA.getId()}')
-  # create_rule(model, kpAA, formula=f'{kpAB.getId()} * {rA.getId()}')
-  # create_rule(model, kpBB, formula=f'{kpBA.getId()} * {rB.getId()}')
-  # create_rule(model, kp)
-  # create_rule(model, rA, formula=f'{kpAA.getId()} / {kpAB.getId()}')
-  # create_rule(model, rB, formula=f'{kpBB.getId()} / {kpBA.getId()}')
 
   # (reaction_id, reactants_dict, products_dict, kinetic_law)
   print('Creating reactions')
@@ -386,9 +269,6 @@ def create_SBML_FRP2_v2(model_filepath: str, with_rules: bool = False) -> Model:
   kpBA = create_parameter(model, 'kpBA', value=1, constant=False)
   kpBB = create_parameter(model, 'kpBB', value=1, constant=False)
   kdAA = create_parameter(model, 'kdAA', value=1, constant=False)
-  # kdAB = create_parameter(model, 'kdAB', value=1, constant=False)
-  # kdBA = create_parameter(model, 'kdBA', value=1, constant=False)
-  # kdBB = create_parameter(model, 'kdBB', value=1, constant=False)
   
   rA = create_parameter(model, 'rA', value=1, constant=False) # rA = kpAA / kpAB
   rB = create_parameter(model, 'rB', value=1, constant=False) # rB = kpBB / kpBA
@@ -463,8 +343,6 @@ def create_SBML_FRP2_v2(model_filepath: str, with_rules: bool = False) -> Model:
   
   return model
 
-
-
 def create_SBML_FRP3_v1(model_filepath: str, with_rules: bool = False) -> Model:
   
   print('Creating SBML model (FRP3 v1)')
@@ -524,10 +402,6 @@ def create_SBML_FRP3_v1(model_filepath: str, with_rules: bool = False) -> Model:
   rAxB = create_parameter(model, 'rAxB', value=1, constant=False) # rAxB = kpAA / kpBB
   rAxC = create_parameter(model, 'rAxC', value=1, constant=False) # rAxC = kpAA / kpCC
   
-  # rA = create_parameter(model, 'rA', value=1, constant=False) # rA = kpAA / kpAB
-  # rB = create_parameter(model, 'rB', value=1, constant=False) # rB = kpBB / kpBA
-  # rX = create_parameter(model, 'rX', value=1, constant=False) # rX = kpAA / kpBB
-  
   # Defining reactions
   # Syntax: (reaction_id, {reactants: stoich}, {products: stoich}, kinetic_law)
   reactions = [
@@ -572,9 +446,7 @@ def create_SBML_FRP3_v1(model_filepath: str, with_rules: bool = False) -> Model:
       ('prop_PCC_B', {PCC.getId(): 1, B.getId(): 1}, {PCB.getId(): 1}, f'{kpCB.getId()} * {PCC.getId()} * {B.getId()}'),
       ('prop_PCC_C', {PCC.getId(): 1, C.getId(): 1}, {PCC.getId(): 1}, f'{kpCC.getId()} * {PCC.getId()} * {C.getId()}'),
   ]
-  # assert()
-  
-  
+
   # Define assignment rules
   create_rule(model, kpBB, formula=f'{kpAA.getId()} / {rAxB.getId()}') # rAxB = kpAA / kpBB
   create_rule(model, kpCC, formula=f'{kpAA.getId()} / {rAxC.getId()}') # rAxC = kpAA / kpCC
@@ -599,62 +471,3 @@ def create_SBML_FRP3_v1(model_filepath: str, with_rules: bool = False) -> Model:
   
   return model
   
-
-def load_amici_model(model_filepath: str, model_output_dir: str) -> Model:
-  
-  # Load the model module
-  model_name = os.path.basename(model_filepath).split('.')[0]
-  model_module = amici.import_model_module(model_name, model_output_dir)
-
-  # Instantiate model
-  model = model_module.getModel()
-
-  # Instantiate solver
-  solver = model.getSolver()
-        
-  return model
-
-
-
-# def 
-# def load_FRP_model
-# def output_SBML_file(model: Model, model_filename: str):
-#   outputSBML(model, model_filename=model_filename)
-#   # generated_reactions
-
-
-  
-
-# def create_FRP_model():
-
-  # Create FRP species
-  
-
-# def create_rule(model: Model, variable, species1: Species, species2: Species) -> AssignmentRule:
-  
-#   rule: AssignmentRule = model.createAssignmentRule()
-#   check(rule.setVariable(variable.getId()), 'set variable')
-  
-#   math_ast: ASTNode = parseL3Formula(f'{species1.getId()} + {species2.getId()} + 1e-10')
-#   check(math_ast,               'create AST for rate expression')
-#   check(rule.setMath(math_ast), 'set math on kinetic law')
-#   return rule
-
-# def create_fraction_rule(model, variable, species1, species2):
-#   rule: AssignmentRule = model.createAssignmentRule()
-#   check(rule.setVariable(variable.getId()), 'set variable')
-
-#   math_ast = parseL3Formula(f'{species1.getId()} / {species2.getId()} + 1e-10')
-#   check(math_ast,                       'create AST for rate expression')
-#   check(rule.setMath(math_ast),      'set math on kinetic law')
-
-def create_rule(model: Model, var, formula: str = '') -> AssignmentRule:
-  
-  rule: AssignmentRule = model.createAssignmentRule()
-  check(rule.setVariable(var.getId()), 'set variable')
-  
-  # math_ast: ASTNode = parseL3Formula(f'{species1.getId()} + {species2.getId()} + 1e-10')
-  math_ast: ASTNode = parseL3Formula(formula)
-  check(math_ast,               'create AST for rate expression')
-  check(rule.setMath(math_ast), 'set math on kinetic law')
-  return rule
