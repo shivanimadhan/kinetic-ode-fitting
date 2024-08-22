@@ -1,0 +1,5 @@
+parameterId	parameterScale	lowerBound	upperBound	nominalValue	estimate
+kpAA	log	1e-05	100000.0	0.8	1
+kpAB	log	1e-05	100000.0	0.6	1
+kpBA	log	1e-05	100000.0	0.8	1
+kpBB	log	1e-05	100000.0	0.6	1

@@ -1,11 +1,11 @@
 format_version: 1
-parameter_file: ../parameters.tsv
+parameter_file: parameters.tsv
 problems:
 - condition_files:
   - conditions.tsv
   measurement_files:
   - measurements.tsv
   observable_files:
-  - ../observables.tsv
+  - observables.tsv
   sbml_files:
-  - ../model_conversion_reaction.xml
+  - sbml_model.xml

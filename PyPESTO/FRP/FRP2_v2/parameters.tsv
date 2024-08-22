@@ -1,0 +1,6 @@
+parameterId	parameterScale	lowerBound	upperBound	nominalValue	estimate
+rA	log	0.001	1000.0	1.0	1
+rB	log	0.001	1000.0	1.0	1
+rX	log	0.001	1000.0	1.0	1
+kpAA	log	0.001	1000.0	1.0	1
+KAA	log	0.001	1000.0	1.0	1

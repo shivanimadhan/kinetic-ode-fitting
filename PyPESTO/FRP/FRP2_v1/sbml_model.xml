@@ -12,8 +12,8 @@
       <compartment id="c" spatialDimensions="3" size="1" units="litre" constant="true"/>
     </listOfCompartments>
     <listOfSpecies>
-      <species id="I" compartment="c" initialAmount="0.005" substanceUnits="mole" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="R" compartment="c" initialAmount="0" substanceUnits="mole" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="I" compartment="c" initialAmount="0" substanceUnits="mole" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="R" compartment="c" initialAmount="0.005" substanceUnits="mole" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="A" compartment="c" initialAmount="1.5" substanceUnits="mole" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="B" compartment="c" initialAmount="1.5" substanceUnits="mole" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="RA" compartment="c" initialAmount="0" substanceUnits="mole" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
@@ -22,75 +22,43 @@
       <species id="PAB" compartment="c" initialAmount="0" substanceUnits="mole" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="PBA" compartment="c" initialAmount="0" substanceUnits="mole" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
       <species id="PBB" compartment="c" initialAmount="0" substanceUnits="mole" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="PA" compartment="c" initialAmount="0" substanceUnits="mole" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
-      <species id="PB" compartment="c" initialAmount="0" substanceUnits="mole" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
     </listOfSpecies>
     <listOfParameters>
       <parameter id="kd" value="10000000000" constant="true"/>
       <parameter id="f" value="0.5" constant="true"/>
-      <parameter id="kpAA" value="2" constant="true"/>
-      <parameter id="kpAB" value="2" constant="true"/>
-      <parameter id="kpBA" value="2" constant="true"/>
-      <parameter id="kpBB" value="2" constant="true"/>
-      <parameter id="fPAA" value="0" constant="false"/>
-      <parameter id="fPAB" value="0" constant="false"/>
-      <parameter id="fPBA" value="0" constant="false"/>
-      <parameter id="fPBB" value="0" constant="false"/>
+      <parameter id="kpAA" value="1" constant="false"/>
+      <parameter id="kpAB" value="1" constant="false"/>
+      <parameter id="kpBA" value="1" constant="false"/>
+      <parameter id="kpBB" value="1" constant="false"/>
+      <parameter id="rA" value="1" constant="false"/>
+      <parameter id="rB" value="1" constant="false"/>
+      <parameter id="rX" value="1" constant="false"/>
     </listOfParameters>
     <listOfRules>
-      <assignmentRule variable="PA">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <plus/>
-            <ci> PAA </ci>
-            <ci> PBA </ci>
-            <cn type="e-notation"> 1 <sep/> -10 </cn>
-          </apply>
-        </math>
-      </assignmentRule>
-      <assignmentRule variable="PB">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <plus/>
-            <ci> PAB </ci>
-            <ci> PBB </ci>
-            <cn type="e-notation"> 1 <sep/> -10 </cn>
-          </apply>
-        </math>
-      </assignmentRule>
-      <assignmentRule variable="fPAA">
+      <assignmentRule variable="kpAB">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <apply>
             <divide/>
-            <ci> PAA </ci>
-            <ci> PA </ci>
+            <ci> kpAA </ci>
+            <ci> rA </ci>
           </apply>
         </math>
       </assignmentRule>
-      <assignmentRule variable="fPAB">
+      <assignmentRule variable="kpBB">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <apply>
             <divide/>
-            <ci> PAB </ci>
-            <ci> PB </ci>
+            <ci> kpAA </ci>
+            <ci> rX </ci>
           </apply>
         </math>
       </assignmentRule>
-      <assignmentRule variable="fPBA">
+      <assignmentRule variable="kpBA">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <apply>
             <divide/>
-            <ci> PBA </ci>
-            <ci> PA </ci>
-          </apply>
-        </math>
-      </assignmentRule>
-      <assignmentRule variable="fPBB">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <divide/>
-            <ci> PBB </ci>
-            <ci> PB </ci>
+            <ci> kpBB </ci>
+            <ci> rB </ci>
           </apply>
         </math>
       </assignmentRule>
