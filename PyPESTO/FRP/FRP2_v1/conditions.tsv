@@ -1,3 +1,4 @@
-conditionId	conditionName	A	B
-c_0	c_0	1.5	1.5
-c_1	c_1	2.25	0.75
+conditionId	conditionName	R	A	B
+c_0	c_0	0.005	0.75	2.25
+c_1	c_1	0.005	1.5	1.5
+c_2	c_2	0.005	2.25	0.75

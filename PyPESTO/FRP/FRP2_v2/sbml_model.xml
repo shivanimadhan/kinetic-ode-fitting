@@ -169,10 +169,10 @@
     <listOfReactions>
       <reaction id="initiation" reversible="false">
         <listOfReactants>
-          <speciesReference species="I" constant="false"/>
+          <speciesReference species="I" stoichiometry="1" constant="false"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="R" constant="false"/>
+          <speciesReference species="R" stoichiometry="2" constant="false"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -187,11 +187,11 @@
       </reaction>
       <reaction id="prop_A" reversible="false">
         <listOfReactants>
-          <speciesReference species="R" constant="false"/>
-          <speciesReference species="A" constant="false"/>
+          <speciesReference species="R" stoichiometry="1" constant="false"/>
+          <speciesReference species="A" stoichiometry="1" constant="false"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="RA" constant="false"/>
+          <speciesReference species="RA" stoichiometry="1" constant="false"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -207,11 +207,11 @@
       </reaction>
       <reaction id="prop_B" reversible="false">
         <listOfReactants>
-          <speciesReference species="R" constant="false"/>
-          <speciesReference species="B" constant="false"/>
+          <speciesReference species="R" stoichiometry="1" constant="false"/>
+          <speciesReference species="B" stoichiometry="1" constant="false"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="RB" constant="false"/>
+          <speciesReference species="RB" stoichiometry="1" constant="false"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -227,11 +227,11 @@
       </reaction>
       <reaction id="prop_RA_A" reversible="false">
         <listOfReactants>
-          <speciesReference species="RA" constant="false"/>
-          <speciesReference species="A" constant="false"/>
+          <speciesReference species="RA" stoichiometry="1" constant="false"/>
+          <speciesReference species="A" stoichiometry="1" constant="false"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="PAA" constant="false"/>
+          <speciesReference species="PAA" stoichiometry="1" constant="false"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -247,11 +247,11 @@
       </reaction>
       <reaction id="prop_RA_B" reversible="false">
         <listOfReactants>
-          <speciesReference species="RA" constant="false"/>
-          <speciesReference species="B" constant="false"/>
+          <speciesReference species="RA" stoichiometry="1" constant="false"/>
+          <speciesReference species="B" stoichiometry="1" constant="false"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="PAB" constant="false"/>
+          <speciesReference species="PAB" stoichiometry="1" constant="false"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -267,11 +267,11 @@
       </reaction>
       <reaction id="prop_RB_A" reversible="false">
         <listOfReactants>
-          <speciesReference species="RB" constant="false"/>
-          <speciesReference species="A" constant="false"/>
+          <speciesReference species="RB" stoichiometry="1" constant="false"/>
+          <speciesReference species="A" stoichiometry="1" constant="false"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="PBA" constant="false"/>
+          <speciesReference species="PBA" stoichiometry="1" constant="false"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -287,11 +287,11 @@
       </reaction>
       <reaction id="prop_RB_B" reversible="false">
         <listOfReactants>
-          <speciesReference species="RB" constant="false"/>
-          <speciesReference species="B" constant="false"/>
+          <speciesReference species="RB" stoichiometry="1" constant="false"/>
+          <speciesReference species="B" stoichiometry="1" constant="false"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="PBB" constant="false"/>
+          <speciesReference species="PBB" stoichiometry="1" constant="false"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -307,11 +307,11 @@
       </reaction>
       <reaction id="prop_PAA_A" reversible="false">
         <listOfReactants>
-          <speciesReference species="PAA" constant="false"/>
-          <speciesReference species="A" constant="false"/>
+          <speciesReference species="PAA" stoichiometry="1" constant="false"/>
+          <speciesReference species="A" stoichiometry="1" constant="false"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="PAA" constant="false"/>
+          <speciesReference species="PAA" stoichiometry="1" constant="false"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -327,11 +327,11 @@
       </reaction>
       <reaction id="prop_PAA_B" reversible="false">
         <listOfReactants>
-          <speciesReference species="PAA" constant="false"/>
-          <speciesReference species="B" constant="false"/>
+          <speciesReference species="PAA" stoichiometry="1" constant="false"/>
+          <speciesReference species="B" stoichiometry="1" constant="false"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="PAB" constant="false"/>
+          <speciesReference species="PAB" stoichiometry="1" constant="false"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -347,11 +347,11 @@
       </reaction>
       <reaction id="prop_PAB_A" reversible="false">
         <listOfReactants>
-          <speciesReference species="PAB" constant="false"/>
-          <speciesReference species="A" constant="false"/>
+          <speciesReference species="PAB" stoichiometry="1" constant="false"/>
+          <speciesReference species="A" stoichiometry="1" constant="false"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="PBA" constant="false"/>
+          <speciesReference species="PBA" stoichiometry="1" constant="false"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -367,11 +367,11 @@
       </reaction>
       <reaction id="prop_PAB_B" reversible="false">
         <listOfReactants>
-          <speciesReference species="PAB" constant="false"/>
-          <speciesReference species="B" constant="false"/>
+          <speciesReference species="PAB" stoichiometry="1" constant="false"/>
+          <speciesReference species="B" stoichiometry="1" constant="false"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="PBB" constant="false"/>
+          <speciesReference species="PBB" stoichiometry="1" constant="false"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -387,11 +387,11 @@
       </reaction>
       <reaction id="prop_PBA_A" reversible="false">
         <listOfReactants>
-          <speciesReference species="PBA" constant="false"/>
-          <speciesReference species="A" constant="false"/>
+          <speciesReference species="PBA" stoichiometry="1" constant="false"/>
+          <speciesReference species="A" stoichiometry="1" constant="false"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="PAA" constant="false"/>
+          <speciesReference species="PAA" stoichiometry="1" constant="false"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -407,11 +407,11 @@
       </reaction>
       <reaction id="prop_PBA_B" reversible="false">
         <listOfReactants>
-          <speciesReference species="PBA" constant="false"/>
-          <speciesReference species="B" constant="false"/>
+          <speciesReference species="PBA" stoichiometry="1" constant="false"/>
+          <speciesReference species="B" stoichiometry="1" constant="false"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="PAB" constant="false"/>
+          <speciesReference species="PAB" stoichiometry="1" constant="false"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -427,11 +427,11 @@
       </reaction>
       <reaction id="prop_PBB_A" reversible="false">
         <listOfReactants>
-          <speciesReference species="PBB" constant="false"/>
-          <speciesReference species="A" constant="false"/>
+          <speciesReference species="PBB" stoichiometry="1" constant="false"/>
+          <speciesReference species="A" stoichiometry="1" constant="false"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="PBA" constant="false"/>
+          <speciesReference species="PBA" stoichiometry="1" constant="false"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -447,11 +447,11 @@
       </reaction>
       <reaction id="prop_PBB_B" reversible="false">
         <listOfReactants>
-          <speciesReference species="PBB" constant="false"/>
-          <speciesReference species="B" constant="false"/>
+          <speciesReference species="PBB" stoichiometry="1" constant="false"/>
+          <speciesReference species="B" stoichiometry="1" constant="false"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="PBB" constant="false"/>
+          <speciesReference species="PBB" stoichiometry="1" constant="false"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -467,11 +467,11 @@
       </reaction>
       <reaction id="deprop_PAAA" reversible="false">
         <listOfReactants>
-          <speciesReference species="PAA" constant="false"/>
+          <speciesReference species="PAA" stoichiometry="1" constant="false"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="PAA" constant="false"/>
-          <speciesReference species="A" constant="false"/>
+          <speciesReference species="PAA" stoichiometry="1" constant="false"/>
+          <speciesReference species="A" stoichiometry="1" constant="false"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -487,11 +487,11 @@
       </reaction>
       <reaction id="deprop_PBAA" reversible="false">
         <listOfReactants>
-          <speciesReference species="PAA" constant="false"/>
+          <speciesReference species="PAA" stoichiometry="1" constant="false"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="PBA" constant="false"/>
-          <speciesReference species="A" constant="false"/>
+          <speciesReference species="PBA" stoichiometry="1" constant="false"/>
+          <speciesReference species="A" stoichiometry="1" constant="false"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">

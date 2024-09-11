@@ -3,7 +3,7 @@ from SALib.sample.sobol import sample as sobol_sample
 
 import numpy as np
 from tqdm import tqdm
-from Sensitivity.FRP_Model import CopolymerizationModel
+from Sensitivity.FRP_Model_ import CopolymerizationModel
 
 from matplotlib import pyplot as plt
 import pandas as pd

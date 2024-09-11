@@ -1,0 +1,5 @@
+parameterId	parameterScale	lowerBound	upperBound	nominalValue	estimate
+kp	log	1000.0	100000000.0	0.0001	1
+kp_kt_ratio	log	1e-06	1000000.0	0.0	1
+kd_kt	log	1e-06	1000000.0	0.0	1
+Kr	log	0.001	10.0	0.0	1
