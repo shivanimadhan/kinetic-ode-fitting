@@ -1,0 +1,16 @@
+{
+    "name": "PyPESTO Development Container",
+    "dockerFile": "/Users/shivanimadhan/Documents/research/pyPESTO/docker/Dockerfile",
+    "context": "..",
+    "workspaceFolder": "/SBML",
+    "mounts": ["source=${localWorkspaceFolder},target=/SBML,type=bind"],
+    "extensions": ["ms-python.python", "ms-toolsai.jupyter"],
+    "settings": {
+      "terminal.integrated.env.linux": {
+        "PYTHONPATH": "/SBML:$PYTHONPATH"
+      }
+    },
+    "postStartCommand": "jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root",
+    "remoteUser": "root",
+    "forwardPorts": [8888]
+  }

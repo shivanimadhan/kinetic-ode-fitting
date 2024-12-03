@@ -9,15 +9,14 @@ import pypesto
 import PyPESTO.FRP.sbml as sbml
 import os
 
-# from Sensitivity.FRP_Model_ import CopolymerizationModel
 from PyPESTO.FRP.FRP_Model import CopolymerizationModel
 
-MODEL_NAME = 'FRP2_v3'
+MODEL_NAME = 'HEATMAP'
 
 from dataclasses import dataclass
 
 @dataclass
-class FRP2_v3_Parameters:
+class HEATMAP_Parameters:
     rA: float
     rB: float
     rX: float
@@ -34,8 +33,8 @@ kpAA_true = 5e4
 kd_true = 1e-3
 kt_true = 1e6
 
-kp_kt_ratio_true = kpAA_true / kt_true
-kd_kt_true = kd_true * kt_true
+kp_kt_ratio_true = 1
+kd_kt_true = 1
 
 def get_rate_params_from_ratios(kpAA, rA, rB, rX, KBB, kt):
     
@@ -71,7 +70,7 @@ def define_parameters():
     
 
 def load_sbml_model(sbml_model_filepath):
-    return sbml.create_SBML_FRP2_v3(
+    return sbml.create_SBML_heatmap(
         sbml_model_filepath,
         with_rules=False,
     )
@@ -111,17 +110,17 @@ def load_amici_from_sbml():
 def run_amici_simulation(model, timepoints, cI0: float=5e-3, cA0:float=0.0, cB0:float=0.0, sigma:float=0.0):
     
     # model
-    print(model.getParameters())
-    print(model.getParameterNames())
+    #print(model.getParameters())
+    #print(model.getParameterNames())
     model.setParameterByName('kpAA', kpAA_true)
     model.setParameterByName('rA', rA_true)
     model.setParameterByName('rB', rB_true)
     model.setParameterByName('rX', rX_true)
     model.setParameterByName('KBB', KBB_true)
     
-    model.setParameterByName('kp_kt_ratio', kpAA_true / kt_true)
-    model.setParameterByName('kd_kt', kd_true * kt_true)
-    print(model.getParameters())
+    model.setParameterByName('kp_kt_ratio', kp_kt_ratio_true)
+    model.setParameterByName('kd_kt', kd_kt_true)
+    #print(model.getParameters())
 
     solver = model.getSolver()
     solver.setAbsoluteTolerance(1e-10)
@@ -179,10 +178,10 @@ def define_FRP_measurements(amici_model):
     conditions_df = pd.DataFrame(columns=[CONDITION_ID, CONDITION_NAME, 'I', 'A', 'B'])
     
     for i, (cI0, cA0, cB0) in enumerate(conditions):
-        print(i, cI0, cA0, cB0)
+        #print(i, cI0, cA0, cB0)
         
         meas_a, meas_b = run_amici_simulation(amici_model, timepoints, cI0=cI0, cA0=cA0, cB0=cB0, sigma=meas_sigma)
-        print(meas_a, meas_b)
+        #print(meas_a, meas_b)
         
         # meas_a_ode, meas_b_ode = run_ode_simulation(timepoints, cI0=cI0, cA0=cA0, cB0=cB0, sigma=meas_sigma)
         # print(meas_a_ode, meas_b_ode)

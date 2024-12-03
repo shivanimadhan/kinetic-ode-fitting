@@ -753,4 +753,143 @@ def create_SBML_FRP3_v1(model_filepath: str, with_rules: bool = False) -> Model:
   outputSBML(document, model_filepath)
   
   return model
+
+def create_SBML_heatmap(model_filepath: str, with_rules: bool = False) -> Model:
+  
+  print('Creating SBML model (Heatmap)')
+  
+  document, model = create_model()
+  c = create_compartment(model, 'c')
+  
+  print('Creating species.')
+  I   = create_species(model, 'I', initialAmount=0.005)
+  R   = create_species(model, 'R', initialAmount=0.000)
+
+  A   = create_species(model, 'A', initialAmount=1.5)
+  B   = create_species(model, 'B', initialAmount=1.5)
+
+  RA  = create_species(model, 'RA')
+  RB  = create_species(model, 'RB')
+
+  PAA = create_species(model, 'PAA')
+  PAB = create_species(model, 'PAB')
+  PBA = create_species(model, 'PBA')
+  PBB = create_species(model, 'PBB')
+  
+  PA = create_species(model, 'PA')
+  PB = create_species(model, 'PB')
+  
+  PD = create_species(model, 'PD')
+
+  print('Generating parameters.')
+  kpAA = create_parameter(model, 'kpAA', value=1, constant=False)
+  kpAB = create_parameter(model, 'kpAB', value=1, constant=False)
+  kpBA = create_parameter(model, 'kpBA', value=1, constant=False)
+  kpBB = create_parameter(model, 'kpBB', value=1, constant=False)
+  kdBB = create_parameter(model, 'kdBB', value=1, constant=False)
+  
+  rA = create_parameter(model, 'rA', value=1, constant=False) # rA = kpAA / kpAB
+  rB = create_parameter(model, 'rB', value=1, constant=False) # rB = kpBB / kpBA
+  rX = create_parameter(model, 'rX', value=1, constant=False) # rX = kpAA / kpBB
+  KBB = create_parameter(model, 'KBB', value=0, constant=False) # KBB = kpBB / kdBB
+  
+  kt = create_parameter(model, 'kt', value=0, constant=False)
+  kd = create_parameter(model, 'kd', value=3e-6, constant=False)
+  f  = create_parameter(model, 'f', constant=True, value=0.5)
+  kp_kt_ratio = create_parameter(model, 'kp_kt_ratio', value=1, constant=False)
+  kd_kt = create_parameter(model, 'kd_kt', value=1, constant=False)
+  
+  create_rule(model, kt, formula=f'{kpAA.getId()} / {kp_kt_ratio.getId()}')
+  create_rule(model, kd, formula=f'{kd_kt.getId()} / {kt.getId()}')
+
+  # Define assignment rules
+  create_rule(model, kpAB, formula=f'{kpAA.getId()} / {rA.getId()}') # rA = kpAA / kpAB -> kpAB = kpAA / rA
+  create_rule(model, kpBB, formula=f'{kpAA.getId()} / {rX.getId()}') # rX = kpAA / kpBB -> kpBB = kpAA / rX
+  create_rule(model, kpBA, formula=f'{kpBB.getId()} / {rB.getId()}') # rB = kpBB / kpBA -> kpBA = kpBB / rB
+  create_rule(model, kdBB, formula=f'{kpBB.getId()} * {KBB.getId()}') # KBB = kpBB / kdBB -> kdBB = kpBB / KBB
+  
+  
+  # kt = create_parameter(model, 'kt', value=0, constant=False)
+  # ktAA = create_parameter(model, 'ktAA', value=0, constant=False)
+  # ktBB = create_parameter(model, 'ktBB', value=0, constant=False)
+  # ktAB = create_parameter(model, 'ktAB', value=0, constant=False)
+  
+  fPAA = create_parameter(model, 'fPAA', value=1, constant=False) # fPAA = PAA / PA
+  fPAB = create_parameter(model, 'fPAB', value=1, constant=False) # fPAB = PAB / PA
+  fPBA = create_parameter(model, 'fPBA', value=1, constant=False) # fPBA = PBA / PB
+  fPBB = create_parameter(model, 'fPBB', value=1, constant=False) # fPBB = PBB / PB
+  
+  create_rule(model, PA, formula=f'{PAA.getId()} + {PBA.getId()}')
+  create_rule(model, PB, formula=f'{PAB.getId()} + {PBB.getId()}')
+  
+  eps = 1e-10
+  create_rule(model, fPAA, formula=f'({PAA.getId()} + {eps}) / ({PA.getId()} + {eps})')
+  create_rule(model, fPAB, formula=f'({PAB.getId()} + {eps}) / ({PB.getId()} + {eps})')
+  create_rule(model, fPBA, formula=f'({PBA.getId()} + {eps}) / ({PA.getId()} + {eps})')
+  create_rule(model, fPBB, formula=f'({PBB.getId()} + {eps}) / ({PB.getId()} + {eps})')
+  
+  # Defining reactions
+  # Syntax: (reaction_id, {reactants: stoich}, {products: stoich}, kinetic_law)
+  reactions = [
+      ('initiation', {I.getId(): 1}, {R.getId(): 2*f.getValue()}, f'{kd.getId()} * {f.getId()} * {I.getId()}'),
+      ('prop_A', {R.getId(): 1, A.getId(): 1}, {RA.getId(): 1}, f'{kpAA.getId()} * {R.getId()} * {A.getId()}'),
+      ('prop_B', {R.getId(): 1, B.getId(): 1}, {RB.getId(): 1}, f'{kpBB.getId()} * {R.getId()} * {B.getId()}'),
+      ('prop_RA_A', {RA.getId(): 1, A.getId(): 1}, {PAA.getId(): 1}, f'{kpAA.getId()} * {RA.getId()} * {A.getId()}'),
+      ('prop_RA_B', {RA.getId(): 1, B.getId(): 1}, {PAB.getId(): 1}, f'{kpAB.getId()} * {RA.getId()} * {B.getId()}'),
+      ('prop_RB_A', {RB.getId(): 1, A.getId(): 1}, {PBA.getId(): 1}, f'{kpBA.getId()} * {RB.getId()} * {A.getId()}'),
+      ('prop_RB_B', {RB.getId(): 1, B.getId(): 1}, {PBB.getId(): 1}, f'{kpBB.getId()} * {RB.getId()} * {B.getId()}'),
+      ('prop_PAA_A', {PAA.getId(): 1, A.getId(): 1}, {PAA.getId(): 1}, f'{kpAA.getId()} * {PAA.getId()} * {A.getId()}'),
+      ('prop_PAA_B', {PAA.getId(): 1, B.getId(): 1}, {PAB.getId(): 1}, f'{kpAB.getId()} * {PAA.getId()} * {B.getId()}'),
+      ('prop_PAB_A', {PAB.getId(): 1, A.getId(): 1}, {PBA.getId(): 1}, f'{kpBA.getId()} * {PAB.getId()} * {A.getId()}'),
+      ('prop_PAB_B', {PAB.getId(): 1, B.getId(): 1}, {PBB.getId(): 1}, f'{kpBB.getId()} * {PAB.getId()} * {B.getId()}'),
+      ('prop_PBA_A', {PBA.getId(): 1, A.getId(): 1}, {PAA.getId(): 1}, f'{kpAA.getId()} * {PBA.getId()} * {A.getId()}'),
+      ('prop_PBA_B', {PBA.getId(): 1, B.getId(): 1}, {PAB.getId(): 1}, f'{kpAB.getId()} * {PBA.getId()} * {B.getId()}'),
+      ('prop_PBB_A', {PBB.getId(): 1, A.getId(): 1}, {PBA.getId(): 1}, f'{kpBA.getId()} * {PBB.getId()} * {A.getId()}'),
+      ('prop_PBB_B', {PBB.getId(): 1, B.getId(): 1}, {PBB.getId(): 1}, f'{kpBB.getId()} * {PBB.getId()} * {B.getId()}'),
+      # ('deprop_PAAA', {PAA.getId(): 1}, {PAA.getId(): 1, A.getId(): 1}, f'{kdAA.getId()} * {fPAA.getId()} * {PAA.getId()}'),
+      # ('deprop_PBAA', {PAA.getId(): 1}, {PBA.getId(): 1, A.getId(): 1}, f'{kdAA.getId()} * {fPBA.getId()} * {PAA.getId()}'),
+      ('deprop_PABB', {PBB.getId(): 1}, {PAB.getId(): 1, B.getId(): 1}, f'{kdBB.getId()} * {fPAB.getId()} * {PBB.getId()}'),
+      ('deprop_PBBB', {PBB.getId(): 1}, {PBB.getId(): 1, B.getId(): 1}, f'{kdBB.getId()} * {fPBB.getId()} * {PBB.getId()}'),
+      
+      
+  ]
+  from itertools import combinations_with_replacement, permutations
+  termination_species = [PAA, PAB, PBA, PBB]
+  x = 0
+  for s1, s2 in combinations_with_replacement(termination_species, 2):
+    reaction_id = f'term_{s1.getId()}_{s2.getId()}'
+    reactants = {s1.getId(): 1, s2.getId(): 1}
+    products = {PD.getId(): 1}
+    
+    if (s1.getId() != s2.getId()):
+      kinetic_law = f'4 * {kt.getId()} * {s1.getId()} * {s2.getId()}'
+    else:
+      kinetic_law = f'2 * {kt.getId()} * {s1.getId()} * {s2.getId()}'
+      
+    reactions.append((reaction_id, reactants, products, kinetic_law))
+    x += 1
+    
+    # if (s1.getId() != s2.getId()):
+    #   reaction_id = f'term_{s2.getId()}_{s1.getId()}'
+    #   reactants = {s2.getId(): 1, s1.getId(): 1}
+    #   products = {PD.getId(): 1}
+    #   kinetic_law = f'2 * {kt.getId()} * {s2.getId()} * {s1.getId()}'
+    #   reactions.append((reaction_id, reactants, products, kinetic_law))
+    #   x += 1
+      
+  print(f'Num Termination Reactions: {x}')
+  
+  
+  # create_rule(model, ktAB, formula=f'({ktAA.getId()} * {ktBB.getId()})^0.5')
+  
+  # (reaction_id, reactants_dict, products_dict, kinetic_law)
+  print('Creating reactions')
+  generated_reactions = []
+  for r in reactions:
+      reaction = create_reaction(model, r[0], r[1], r[2], r[3])
+      generated_reactions.append(reaction)
+      
+  outputSBML(document, model_filepath)
+  
+  return model
   
