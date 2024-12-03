@@ -319,6 +319,7 @@ class CopolymerizationModel():
             method = 'LSODA'
         # method = 'LSODA'
         self.mom_sol = solve_ivp(self.method_of_moments_ODEs, self.t_span, self.y0, method=method, rtol=1e-10, atol=1e-10, first_step=1e-10)
+        t_span = [0, 60]
 
         # Interpolate method of moments solution
         # num_points = 20

@@ -36,9 +36,28 @@ kd_kt_true = kd_true * kt_true
 
 # sbml_model_filepath = '/SBML/PyPESTO/FRP/sbml_model.xml'
 amici_model, sbml_model_filepath = create_FRP2_v3.load_amici_from_sbml()
-yaml_filepath = create_FRP2_v3.write_petab_files(amici_model, sbml_model_filepath)
+# yaml_filepath = create_FRP2_v3.write_petab_files(amici_model, sbml_model_filepath)
+
+
+
 observables_df, conditions_df, measurements_df = create_FRP2_v3.define_FRP_measurements(amici_model)
 
+# conv_df = measurements_df.copy()
+# conditions = measurements_df[SIMULATION_CONDITION_ID].unique()
+# observables = measurements_df[OBSERVABLE_ID].unique()
+# variance_dict = {}
+# for c in conditions:
+#     for o in observables:
+#         meas_data = conv_df.loc[(conv_df[SIMULATION_CONDITION_ID] == c) & (conv_df[OBSERVABLE_ID] == o), MEASUREMENT]
+#         max_conc = meas_data.max()
+#         conv_data = (max_conc - meas_data) / max_conc
+#         conv_df.loc[(conv_df[SIMULATION_CONDITION_ID] == c) & (conv_df[OBSERVABLE_ID] == o), MEASUREMENT] = conv_data
+        
+#         # Compute the variance of the converted data
+#         variance_dict[(c, o)] = conv_data.var()
+
+# print(np.sum(list(variance_dict.values())))
+# variance_dict
 
 
 fig, axs = plot_measurements(measurements_df)

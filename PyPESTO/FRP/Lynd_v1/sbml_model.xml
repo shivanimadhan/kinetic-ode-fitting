@@ -1,0 +1,684 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sbml xmlns="http://www.sbml.org/sbml/level3/version2/core" level="3" version="2">
+  <model substanceUnits="mole" timeUnits="second" extentUnits="mole">
+    <listOfUnitDefinitions>
+      <unitDefinition id="per_second">
+        <listOfUnits>
+          <unit id="per_second" kind="second" exponent="-1" scale="0" multiplier="1"/>
+        </listOfUnits>
+      </unitDefinition>
+    </listOfUnitDefinitions>
+    <listOfCompartments>
+      <compartment id="c" spatialDimensions="3" size="1" units="litre" constant="true"/>
+    </listOfCompartments>
+    <listOfSpecies>
+      <species id="R" compartment="c" initialAmount="0" substanceUnits="mole" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="A" compartment="c" initialAmount="0" substanceUnits="mole" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="B" compartment="c" initialAmount="0" substanceUnits="mole" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="RA" compartment="c" initialAmount="0" substanceUnits="mole" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="RB" compartment="c" initialAmount="0" substanceUnits="mole" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="PAA" compartment="c" initialAmount="0" substanceUnits="mole" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="PAB" compartment="c" initialAmount="0" substanceUnits="mole" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="PBA" compartment="c" initialAmount="0" substanceUnits="mole" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="PBB" compartment="c" initialAmount="0" substanceUnits="mole" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="PA" compartment="c" initialAmount="0" substanceUnits="mole" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="PB" compartment="c" initialAmount="0" substanceUnits="mole" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+    </listOfSpecies>
+    <listOfParameters>
+      <parameter id="kpAA" value="1" constant="false"/>
+      <parameter id="kpAB" value="1" constant="false"/>
+      <parameter id="kpBA" value="1" constant="false"/>
+      <parameter id="kpBB" value="1" constant="false"/>
+      <parameter id="kdAA" value="1" constant="false"/>
+      <parameter id="kdAB" value="1" constant="false"/>
+      <parameter id="kdBA" value="1" constant="false"/>
+      <parameter id="kdBB" value="1" constant="false"/>
+      <parameter id="rA" value="1" constant="false"/>
+      <parameter id="rB" value="1" constant="false"/>
+      <parameter id="rX" value="1" constant="false"/>
+      <parameter id="KAA" value="0" constant="false"/>
+      <parameter id="KAB" value="0" constant="false"/>
+      <parameter id="KBA" value="0" constant="false"/>
+      <parameter id="KBB" value="0" constant="false"/>
+      <parameter id="A0" value="0" constant="false"/>
+      <parameter id="B0" value="0" constant="false"/>
+      <parameter id="xA" value="0" constant="false"/>
+      <parameter id="xB" value="0" constant="false"/>
+      <parameter id="fPAA" value="0" constant="false"/>
+      <parameter id="fPAB" value="0" constant="false"/>
+      <parameter id="fPBA" value="0" constant="false"/>
+      <parameter id="fPBB" value="0" constant="false"/>
+    </listOfParameters>
+    <listOfInitialAssignments>
+      <initialAssignment symbol="A0">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <ci> A </ci>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="B0">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <ci> B </ci>
+        </math>
+      </initialAssignment>
+    </listOfInitialAssignments>
+    <listOfRules>
+      <assignmentRule variable="kpAB">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci> kpAA </ci>
+            <ci> rA </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="kpBB">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci> kpAA </ci>
+            <ci> rX </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="kpBA">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci> kpBB </ci>
+            <ci> rB </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="kdAA">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <ci> kpAA </ci>
+            <ci> KAA </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="kdAB">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <ci> kpAB </ci>
+            <ci> KAB </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="kdBA">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <ci> kpBA </ci>
+            <ci> KBA </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="kdBB">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <ci> kpBB </ci>
+            <ci> KBB </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="xA">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <minus/>
+            <cn type="integer"> 1 </cn>
+            <apply>
+              <divide/>
+              <ci> A </ci>
+              <ci> A0 </ci>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="xB">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <minus/>
+            <cn type="integer"> 1 </cn>
+            <apply>
+              <divide/>
+              <ci> B </ci>
+              <ci> B0 </ci>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="PA">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <plus/>
+            <ci> PAA </ci>
+            <ci> PBA </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="PB">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <plus/>
+            <ci> PAB </ci>
+            <ci> PBB </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="fPAA">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <apply>
+              <plus/>
+              <ci> PAA </ci>
+              <cn type="e-notation"> 1 <sep/> -10 </cn>
+            </apply>
+            <apply>
+              <plus/>
+              <ci> PA </ci>
+              <cn type="e-notation"> 1 <sep/> -10 </cn>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="fPAB">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <apply>
+              <plus/>
+              <ci> PAB </ci>
+              <cn type="e-notation"> 1 <sep/> -10 </cn>
+            </apply>
+            <apply>
+              <plus/>
+              <ci> PB </ci>
+              <cn type="e-notation"> 1 <sep/> -10 </cn>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="fPBA">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <apply>
+              <plus/>
+              <ci> PBA </ci>
+              <cn type="e-notation"> 1 <sep/> -10 </cn>
+            </apply>
+            <apply>
+              <plus/>
+              <ci> PA </ci>
+              <cn type="e-notation"> 1 <sep/> -10 </cn>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="fPBB">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <apply>
+              <plus/>
+              <ci> PBB </ci>
+              <cn type="e-notation"> 1 <sep/> -10 </cn>
+            </apply>
+            <apply>
+              <plus/>
+              <ci> PB </ci>
+              <cn type="e-notation"> 1 <sep/> -10 </cn>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+    </listOfRules>
+    <listOfReactions>
+      <reaction id="prop_A" reversible="false">
+        <listOfReactants>
+          <speciesReference species="R" stoichiometry="1" constant="false"/>
+          <speciesReference species="A" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="RA" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> kpAA </ci>
+              <ci> R </ci>
+              <ci> A </ci>
+              <ci> c </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="prop_B" reversible="false">
+        <listOfReactants>
+          <speciesReference species="R" stoichiometry="1" constant="false"/>
+          <speciesReference species="B" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="RB" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> kpBB </ci>
+              <ci> R </ci>
+              <ci> B </ci>
+              <ci> c </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="prop_RA_A" reversible="false">
+        <listOfReactants>
+          <speciesReference species="RA" stoichiometry="1" constant="false"/>
+          <speciesReference species="A" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="PAA" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> kpAA </ci>
+              <ci> RA </ci>
+              <ci> A </ci>
+              <ci> c </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="prop_RA_B" reversible="false">
+        <listOfReactants>
+          <speciesReference species="RA" stoichiometry="1" constant="false"/>
+          <speciesReference species="B" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="PAB" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> kpAB </ci>
+              <ci> RA </ci>
+              <ci> B </ci>
+              <ci> c </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="prop_RB_A" reversible="false">
+        <listOfReactants>
+          <speciesReference species="RB" stoichiometry="1" constant="false"/>
+          <speciesReference species="A" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="PBA" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> kpBA </ci>
+              <ci> RB </ci>
+              <ci> A </ci>
+              <ci> c </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="prop_RB_B" reversible="false">
+        <listOfReactants>
+          <speciesReference species="RB" stoichiometry="1" constant="false"/>
+          <speciesReference species="B" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="PBB" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> kpBB </ci>
+              <ci> RB </ci>
+              <ci> B </ci>
+              <ci> c </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="prop_PAA_A" reversible="false">
+        <listOfReactants>
+          <speciesReference species="PAA" stoichiometry="1" constant="false"/>
+          <speciesReference species="A" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="PAA" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> kpAA </ci>
+              <ci> PAA </ci>
+              <ci> A </ci>
+              <ci> c </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="prop_PAA_B" reversible="false">
+        <listOfReactants>
+          <speciesReference species="PAA" stoichiometry="1" constant="false"/>
+          <speciesReference species="B" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="PAB" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> kpAB </ci>
+              <ci> PAA </ci>
+              <ci> B </ci>
+              <ci> c </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="prop_PAB_A" reversible="false">
+        <listOfReactants>
+          <speciesReference species="PAB" stoichiometry="1" constant="false"/>
+          <speciesReference species="A" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="PBA" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> kpBA </ci>
+              <ci> PAB </ci>
+              <ci> A </ci>
+              <ci> c </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="prop_PAB_B" reversible="false">
+        <listOfReactants>
+          <speciesReference species="PAB" stoichiometry="1" constant="false"/>
+          <speciesReference species="B" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="PBB" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> kpBB </ci>
+              <ci> PAB </ci>
+              <ci> B </ci>
+              <ci> c </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="prop_PBA_A" reversible="false">
+        <listOfReactants>
+          <speciesReference species="PBA" stoichiometry="1" constant="false"/>
+          <speciesReference species="A" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="PAA" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> kpAA </ci>
+              <ci> PBA </ci>
+              <ci> A </ci>
+              <ci> c </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="prop_PBA_B" reversible="false">
+        <listOfReactants>
+          <speciesReference species="PBA" stoichiometry="1" constant="false"/>
+          <speciesReference species="B" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="PAB" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> kpAB </ci>
+              <ci> PBA </ci>
+              <ci> B </ci>
+              <ci> c </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="prop_PBB_A" reversible="false">
+        <listOfReactants>
+          <speciesReference species="PBB" stoichiometry="1" constant="false"/>
+          <speciesReference species="A" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="PBA" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> kpBA </ci>
+              <ci> PBB </ci>
+              <ci> A </ci>
+              <ci> c </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="prop_PBB_B" reversible="false">
+        <listOfReactants>
+          <speciesReference species="PBB" stoichiometry="1" constant="false"/>
+          <speciesReference species="B" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="PBB" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> kpBB </ci>
+              <ci> PBB </ci>
+              <ci> B </ci>
+              <ci> c </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="deprop_PAAA" reversible="false">
+        <listOfReactants>
+          <speciesReference species="PAA" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="PAA" stoichiometry="1" constant="false"/>
+          <speciesReference species="A" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> kdAA </ci>
+              <ci> fPAA </ci>
+              <ci> PAA </ci>
+              <ci> c </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="deprop_PBAA" reversible="false">
+        <listOfReactants>
+          <speciesReference species="PAA" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="PBA" stoichiometry="1" constant="false"/>
+          <speciesReference species="A" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> kdAA </ci>
+              <ci> fPBA </ci>
+              <ci> PAA </ci>
+              <ci> c </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="deprop_PABA" reversible="false">
+        <listOfReactants>
+          <speciesReference species="PBA" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="PAB" stoichiometry="1" constant="false"/>
+          <speciesReference species="A" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> kdBA </ci>
+              <ci> fPAB </ci>
+              <ci> PBA </ci>
+              <ci> c </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="deprop_PBBA" reversible="false">
+        <listOfReactants>
+          <speciesReference species="PBA" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="PBB" stoichiometry="1" constant="false"/>
+          <speciesReference species="A" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> kdBA </ci>
+              <ci> fPBB </ci>
+              <ci> PBA </ci>
+              <ci> c </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="deprop_PAAB" reversible="false">
+        <listOfReactants>
+          <speciesReference species="PAB" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="PAA" stoichiometry="1" constant="false"/>
+          <speciesReference species="B" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> kdAB </ci>
+              <ci> fPAA </ci>
+              <ci> PAB </ci>
+              <ci> c </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="deprop_PBAB" reversible="false">
+        <listOfReactants>
+          <speciesReference species="PAB" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="PBA" stoichiometry="1" constant="false"/>
+          <speciesReference species="B" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> kdAB </ci>
+              <ci> fPBA </ci>
+              <ci> PAB </ci>
+              <ci> c </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="deprop_PABB" reversible="false">
+        <listOfReactants>
+          <speciesReference species="PBB" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="PAB" stoichiometry="1" constant="false"/>
+          <speciesReference species="B" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> kdBB </ci>
+              <ci> fPAB </ci>
+              <ci> PBB </ci>
+              <ci> c </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="deprop_PBBB" reversible="false">
+        <listOfReactants>
+          <speciesReference species="PBB" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="PBB" stoichiometry="1" constant="false"/>
+          <speciesReference species="B" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> kdBB </ci>
+              <ci> fPBB </ci>
+              <ci> PBB </ci>
+              <ci> c </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+    </listOfReactions>
+  </model>
+</sbml>
