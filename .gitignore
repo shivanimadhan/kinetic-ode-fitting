@@ -1,0 +1,11 @@
+Experiments/.DS_Store
+.DS_Store
+__pycache__/
+.devcontainer/
+amici_models/
+amici-sbml_model/
+tmp/
+.vscode/
+.DS_Store
+axlen.data\
+outcmaes/

@@ -83,7 +83,7 @@ def load_amici_from_sbml():
         observables=observables,
         constant_parameters=constant_parameters
     )
-    
+    print(f'Import model ({MODEL_NAME}) module.')
     model_module = amici.import_model_module(MODEL_NAME, model_output_dir)
 
     # Instantiate model
@@ -164,7 +164,7 @@ def define_FRP_measurements(amici_model):
     cM0s = [3.0, 3.0, 3.0]
     
     obs_sigma = 0.02
-    meas_sigma = 0.02
+    meas_sigma = 0.00
      
     assert(len(fA0s) == len(cM0s) and len(fA0s) == num_conditions)
     

@@ -29,12 +29,14 @@ class PetabData:
     measurements: pd.DataFrame
     parameters: pd.DataFrame
 
+# def plot_conversion()
 
-
-def plot_measurements(mdf: pd.DataFrame, conversion=False):
+def plot_measurements(mdf: pd.DataFrame, conversion=False, ax=None):
     # Get the unique conditions and observables
     conditions = mdf["simulationConditionId"].unique()
     observables = mdf["observableId"].unique()
+    
+    colors = ['tab:blue', 'tab:green', 'tab:orange', 'tab:red', 'tab:purple', 'tab:brown']
 
     # Calculate the number of rows and columns for subplots
     num_conditions = len(conditions)
@@ -42,29 +44,31 @@ def plot_measurements(mdf: pd.DataFrame, conversion=False):
     num_rows = (num_conditions + num_cols - 1) // num_cols  # Round up to get the number of rows needed
 
     # Create the subplots
-    fig, ax = plt.subplots(num_rows, num_cols, figsize=(15, 5 * num_rows))
-    ax = ax.flatten()  # Flatten to easily iterate
+    if ax is None:
+        fig, ax = plt.subplots(num_rows, num_cols, figsize=(15, 5 * num_rows))
+        ax = ax.flatten()  # Flatten to easily iterate
 
     # Loop through each condition and plot the data
     for i, condition in enumerate(conditions):
         condition_data = mdf[mdf["simulationConditionId"] == condition]
 
-        for obs in observables:
+        for j, obs in enumerate(observables):
             obs_data = condition_data[condition_data['observableId'] == obs]
+            
             
             if conversion:
                 max_concentration = obs_data['measurement'].max()
                 print('max', max_concentration)
                 conv_data = (max_concentration - obs_data['measurement']) / max_concentration
-                ax[i].plot(obs_data['time'], conv_data, 'o-', label=obs)
+                ax[i].plot(obs_data['time'], conv_data, 'o-', label=obs, color=colors[j])
             else:
-                ax[i].plot(obs_data['time'], obs_data['measurement'], 'o-', label=obs)
+                ax[i].plot(obs_data['time'], obs_data['measurement'], 'o-', label=obs, color=colors[j])
 
         ax[i].set_title(f'Condition {condition}')
         ax[i].set_xlabel('Time (s)')
         # ax[i].set_ylabel('Simulated Concentration (M)')
         ax[i].set_ylim([0, 2.5])
-        ax[i].legend(frameon=False)
+        # ax[i].legend(frameon=False)
         
         if conversion:
             ax[i].set_ylabel('Conversion')
@@ -74,11 +78,11 @@ def plot_measurements(mdf: pd.DataFrame, conversion=False):
             ax[i].set_ylim([0, mdf['measurement'].max()])
 
     # Hide any unused subplots
-    for j in range(i + 1, len(ax)):
-        fig.delaxes(ax[j])
+    # for j in range(i + 1, len(ax)):
+    #     fig.delaxes(ax[j])
 
     plt.tight_layout()
-    return fig, ax
+    return ax
 
 def load_petab_problem(yaml_filepath: str, model_name: str) -> pypesto.problem.Problem:
     
